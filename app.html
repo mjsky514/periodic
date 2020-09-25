@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>periodic</title>
+	<style>
+body,html{
+	width:100%;
+	height:100vh;
+	overflow: hidden;
+	
+}
+*{
+	margin:0;
+	padding:0;
+}
+.wrap{
+	width:100%;
+	height:100vh;
+	background-color:black;
+	color:white;
+}
+.box{
+	width: 100px;
+	height: 100px;
+	margin:20px;
+	float: left;
+	text-align: center;
+	cursor: pointer;
+	height:100px;
+	line-height: 100px;
+	font-size: 20pt;
+}
+
+.box:nth-child(1){
+	background-color: red;
+}
+.box:nth-child(2){
+	background-color: orange;
+}
+.box:nth-child(3){
+	background-color: indigo;
+}
+.box:nth-child(4){
+	background-color: purple;
+}
+.box > h1{
+	
+}
+.selection{
+
+}
+.question{
+	background-color: white;
+	color:black;
+	width: 300px;
+	text-align: center;
+	margin-left:20px;
+}
+.result{
+	font-size: 20pt;
+	clear:both;
+}
+
+	</style>
+	<script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js">
+</script>
+</head>
+<body onload="main()">
+	<div class="wrap">
+		<div class="question">
+			<h1 id="q_text"></h1>
+		</div>
+		<div class="selection">
+			<div class="box" id="1" onclick="select(this);">1</div>
+			<div class="box" id="2" onclick="select(this);">2</div>
+			<div class="box" id="3" onclick="select(this);">3</div>
+			<div class="box" id="4" onclick="select(this);">4</div>
+		</div>
+		<div class="result"></div>
+	</div>
+	<script type="text/javascript">
+		function select(e){
+			if($(e).attr('id') == 'true'){
+				$(".result").text('맞았습니다!');
+				main();
+			} else {
+				$(".result").text('틀렸습니다!');
+				main();
+			}
+		}
+		function main(){
+			const e_symbols = ['H','He','Li','Be','B','C','N','O','F','Ne','Na','Mg','Al','Si','P','S','Cl','Ar','K','Ca'];
+			const col_1 = 0;
+			const col_2 = 2;
+			const col_3 = 10;
+			const col_4 = 18;
+			const col_5 = 20;
+
+
+			let e_index = Math.floor((Math.random()*20));
+			let e_number = e_index+1;
+			let period,group;
+
+			if(col_1 < e_number && e_number <= col_2){
+				period = 1;
+				group = e_number - col_1;
+				if(group >= 3) group += 10;
+			} else if(col_2 < e_number && e_number <= col_3){
+				period = 2;
+				group = e_number - col_2;
+				if(group >= 3) group += 10;
+			} else if(col_3 < e_number && e_number <= col_4){
+				period = 3;
+				group = e_number - col_3;
+				if(group >= 3) group += 10;
+			} else if(col_4 < e_number && e_number <= col_5){
+				period = 4;
+				group = e_number - col_4;
+				if(group >= 3) group += 10;
+			}
+
+			$('#q_text').text(period+"주기 "+group+"족 원소");
+
+			let answer_index = Math.floor((Math.random()*4));
+			console.log(answer_index);
+			for (var i = 0; i < 4; i++) {
+				if( i== answer_index){
+					$('.box:eq('+i+')').attr('id',"true");
+					$('.box:eq('+i+')').text(e_symbols[e_index]);
+				} else {
+					let wrong_e_index = Math.floor((Math.random()*20));
+					if(wrong_e_index == e_index) wrong_e_index = 19 - wrong_e_index;
+					$('.box:eq('+i+')').attr('id',"false");
+					$('.box:eq('+i+')').text(e_symbols[wrong_e_index]);
+				}
+			}
+			
+
+		}
+
+
+
+	</script>
+</body>
+</html>
